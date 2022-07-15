@@ -3,10 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version KOTLIN_VERSION
     kotlin("plugin.allopen") version KOTLIN_VERSION
-    kotlin("plugin.jpa") version KOTLIN_VERSION
 
     id("io.quarkus") version QUARKUS_VERSION
 
+    java
     idea
 }
 
@@ -24,7 +24,6 @@ dependencies {
 
     // Kotlin
     implementation("io.quarkus:quarkus-kotlin")
-    implementation(kotlin("stdlib-jdk8"))
 
     // Tests
     testImplementation("io.quarkus:quarkus-junit5")
@@ -43,9 +42,7 @@ tasks.withType<Test> { useJUnitPlatform() }
 
 allOpen {
     annotation("javax.enterprise.context.ApplicationScoped")
-    annotation("javax.ws.rs.Path")
     annotation("io.quarkus.test.junit.QuarkusTest")
-    annotation("javax.persistence.Entity")
 }
 
 idea.module {

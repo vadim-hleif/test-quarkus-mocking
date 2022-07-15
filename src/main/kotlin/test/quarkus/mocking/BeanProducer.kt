@@ -3,11 +3,10 @@ package test.quarkus.mocking
 import javax.enterprise.context.ApplicationScoped
 import javax.enterprise.inject.Produces
 
-
-class BeansProvider {
-
+class BeanProducer {
     @Produces
     @ApplicationScoped
-    fun b(): B = B()
-
+    fun createEngine(): Engine {
+        return Engine()
+    }
 }
