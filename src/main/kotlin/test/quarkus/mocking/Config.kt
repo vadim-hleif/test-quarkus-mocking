@@ -1,5 +1,5 @@
 package test.quarkus.mocking
 
-class Config {
+open class Config {
     val retryTimes = 10
 }

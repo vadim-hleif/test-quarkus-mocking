@@ -1,6 +1,6 @@
 package test.quarkus.mocking
 
-class Engine {
+open class Engine {
     private val config = Config()
 
     fun launch(retryTimes: Int): String {
