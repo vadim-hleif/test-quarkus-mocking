@@ -1,11 +1,13 @@
 package test.quarkus.mocking
 
-import javax.enterprise.context.ApplicationScoped
-import javax.enterprise.inject.Produces
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
+
+@Configuration
 class BeanProducer {
-    @Produces
-    @ApplicationScoped
+
+    @Bean
     fun createEngine(): Engine {
         return Engine()
     }

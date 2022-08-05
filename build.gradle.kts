@@ -1,10 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
 plugins {
     kotlin("jvm") version KOTLIN_VERSION
-    kotlin("plugin.allopen") version KOTLIN_VERSION
 
-    id("io.quarkus") version QUARKUS_VERSION
+    kotlin("plugin.spring") version KOTLIN_VERSION
+    kotlin("plugin.jpa") version KOTLIN_VERSION
+
+    id("org.springframework.boot") version "2.7.1"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
 
     java
     idea
@@ -16,18 +20,13 @@ repositories {
 }
 
 dependencies {
-    // Quarkus
-    implementation(enforcedPlatform("io.quarkus:quarkus-universe-bom:$QUARKUS_VERSION"))
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    // Build
-    implementation("io.quarkus:quarkus-arc")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // Kotlin
-    implementation("io.quarkus:quarkus-kotlin")
-
-    // Tests
-    testImplementation("io.quarkus:quarkus-junit5")
-    testImplementation("io.quarkus:quarkus-junit5-mockito")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 
     testImplementation("io.kotest:kotest-assertions-core-jvm:$KOTEST_VERSION")
@@ -37,13 +36,9 @@ dependencies {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
     kotlinOptions.javaParameters = true
+    kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
 }
 tasks.withType<Test> { useJUnitPlatform() }
-
-allOpen {
-    annotation("javax.enterprise.context.ApplicationScoped")
-    annotation("io.quarkus.test.junit.QuarkusTest")
-}
 
 idea.module {
     isDownloadJavadoc = true

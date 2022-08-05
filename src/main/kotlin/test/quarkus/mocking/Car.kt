@@ -1,8 +1,8 @@
 package test.quarkus.mocking
 
-import javax.enterprise.context.ApplicationScoped
+import org.springframework.stereotype.Component
 
-@ApplicationScoped
+@Component
 class Car(private val engine: Engine) {
 
     fun launch(additionalRetries: Int): String {
