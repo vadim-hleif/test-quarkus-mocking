@@ -33,7 +33,7 @@ internal class MockingTest {
     private lateinit var car: Car
 
     @Test
-    fun `Quarkus CDI -- NOT OK, in MockingTest`() {
+    fun `Quarkus CDI -- NOT OK`() {
         whenever(engine.launch(any())).thenReturn("not ready")
         assertEquals(engine.launch(1), "not ready")
         logClassAndHash("from test (OK)", engine)
