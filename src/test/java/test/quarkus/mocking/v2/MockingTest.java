@@ -21,7 +21,7 @@ class MockingTest {
     Car car;
 
     @Test
-    void testProducesAnnotation() {
+    void quarkusCdiWorksWithJava() {
         when(engine.launch(any())).thenReturn("not ready");
         assertEquals(engine.launch(1), "not ready");
         logClassAndHash("from test (OK)", engine);
