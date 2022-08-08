@@ -1,0 +1,48 @@
+name: Run tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Run tests using gradle wrapper.
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Cache build .gradle dir
+        uses: actions/cache@v3
+        with:
+          path: .gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle.kts') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Cache user .gradle dir
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle
+          key: ${{ runner.os }}-gradleuser-${{ hashFiles('**/build.gradle.kts') }}
+          restore-keys: |
+            ${{ runner.os }}-gradleuser-
+
+      - name: Run tests
+        run: ./gradlew test -i
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1.5.0
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: JUnit Tests            # Name of the check run which will be created
+          path: build/test-results/test/*.xml    # Path to test results
+          reporter: java-junit        # Format of test results
